@@ -14,6 +14,7 @@ class Main {
 
         final int MIN = 1; // Minimum number +1 because 0 is neither even nor odd
         final int MAX = 999; // Maximum number
+        final String ERROR = "Please enter a positive number higher than 0: ";
 
         int[] arr; // Array to store the random numbers
         int temp; // Temporary variable to store the random number
@@ -22,12 +23,34 @@ class Main {
         int oddCount = 0; // Number of odd numbers
 
         System.out.print("How many random numbers in the range 0 - 999 are desired? ");
-        n = sc.nextInt();
+
+        // make sure n is a valid integer
+        while (!sc.hasNextInt()) {
+            System.out.print(ERROR);
+            sc.next();
+        }
+
+        // try catch n is out of memory
+        try {
+            n = sc.nextInt();
+
+            // check if n is bigger than MIN
+            while (n < MIN) {
+                System.out.print(ERROR);
+
+                arr = new int[n]; // create an array with n elements
+            }
+        } catch (OutOfMemoryError e) {
+            System.out.println("Out of memory error. Please enter a smaller number.");
+            sc.close();
+            return;
+        }
+
         System.out.println(" ");
 
         arr = new int[n]; // Initializing the array
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) { // Loop to generate n random numbers
             arr[i] = RANDOM_NUMBER_GENERATOR(MIN, MAX);
         }
 
