@@ -16,7 +16,9 @@ class Main {
         final int MAX = 999; // Maximum number
         final String ERROR = "Please enter a positive number higher than 0: ";
 
-        int[] arr; // Array to store the random numbers
+        int[] base_array; // Array to store the random numbers
+        int[] even_array = { 0 }; // Array to store the even numbers
+        int[] odd_array = { 0 }; // Array to store the odd numbers
         int temp; // Temporary variable to store the random number
         int n; // Number of random numbers to be generated
         int evenCount = 0; // Number of even numbers
@@ -38,7 +40,7 @@ class Main {
             while (n < MIN) {
                 System.out.print(ERROR);
 
-                arr = new int[n]; // create an array with n elements
+                base_array = new int[n]; // create an array with n elements
             }
         } catch (OutOfMemoryError e) {
             System.out.println("Out of memory error. Please enter a smaller number.");
@@ -48,46 +50,53 @@ class Main {
 
         System.out.println(" ");
 
-        arr = new int[n]; // Initializing the array
+        base_array = new int[n]; // Initializing the array
 
         for (int i = 0; i < n; i++) { // Loop to generate n random numbers
-            arr[i] = RANDOM_NUMBER_GENERATOR(MIN, MAX);
+            base_array[i] = RANDOM_NUMBER_GENERATOR(MIN, MAX);
         }
 
         System.out.println("Here are the random numbers: ");
         for (int i = 0; i < n; i++) {
-            System.out.print(arr[i] + " ");
+            System.out.print(base_array[i] + " ");
         }
         System.out.println("\n");
 
-        System.out.println("Here are the random generated numbers arranged:");
+        System.out.println("Here are the random generated numbers arranged even and then odd:");
 
         // Sorting the array
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
-                if (arr[i] > arr[j]) {
-                    temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
+                if (base_array[i] > base_array[j]) {
+                    temp = base_array[i];
+                    base_array[i] = base_array[j];
+                    base_array[j] = temp;
+                }
+            }
+        }
+
+        // Dividing the array into even and odd arrays
+        for (int i = 0; i < n; i++) { // I could have used base_array.length but n is more efficient
+            if (base_array[i] % 2 == 0) {
+                for (int j = 0; j < 1; j++) {
+                    even_array[j] = base_array[i];
+                }
+            } else {
+                for (int j = 0; j < 1; j++) {
+                    odd_array[j] = base_array[i];
                 }
             }
         }
 
         // Printing the sorted array
-        for (int i = 0; i < n; i++) {
-            System.out.print(arr[i] + " ");
+        for (int i = 0; i < even_array.length; i++) {
+            System.out.print(even_array[i] + " ");
+        }
+        System.out.print(" " + "-" + " ");
+        for (int i = 0; i < odd_array.length; i++) {
+            System.out.print(odd_array[i] + " ");
         }
         System.out.println("\n");
-
-        // Count the number of even numbers
-        for (int i = 0; i < n; i++) {
-            if (arr[i] % 2 == 0) {
-                evenCount++;
-            }
-        }
-
-        // Count the number of odd numbers
-        oddCount = n - evenCount;
 
         System.out.println(
                 "Of the above " + n + " random numbers, " + evenCount + " are even and " + oddCount + " are odd");
