@@ -98,6 +98,14 @@ class Main {
                 evenCount++;
             }
         }
+
+        // Invert the array
+        for (int i = 0; i < number / 2; i++) {
+            int temp = array[i];
+            array[i] = array[number - i - 1];
+            array[number - i - 1] = temp;
+        }
+
         System.out.print("- ");
         for (int i = 0; i < number; i++) {
             if (array[i] % 2 != 0) {
@@ -110,5 +118,5 @@ class Main {
                 "\n\nOf the above " + number + " numbers, " + evenCount + " were even and " + oddCount + " odd");
 
         scanner.close();
-    }
-}
+    } // End of main
+} // End of class
